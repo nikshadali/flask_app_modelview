@@ -41,7 +41,7 @@ my_admin = False
 # define model view for Compay
 class CompanyModelView(ModelView):
     def is_accessible(self):
-        if my_admin:
+        if session.get('is_admin'):
             return True
         else:
             return False
@@ -49,7 +49,7 @@ class CompanyModelView(ModelView):
 # define User Model View
 class UserModelView(ModelView):
     def is_accessible(self):
-        if my_admin:
+        if session.get('is_admin'):
             return True
         else:
             return False
@@ -69,13 +69,15 @@ admin.add_view(UserModelView(User,db.session))
 
 @app.route('/')
 def index():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
     return "This is flask app"
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
-        username = request.json.get('username')
-        password = request.json.get('password')
+        username = request.form['username']
+        password = request.form['password']
         admin = Myadmin.query.filter_by(username=username, password=password).first()
         
         if admin:
@@ -84,7 +86,7 @@ def login():
             session['logged_in'] = True  
             session['is_admin'] = True
         
-            return jsonify({'message': 'You are Admin'})
+            return redirect(url_for('index'))
 
         else:
             user = User.query.filter_by(username=username, password=password).first()
@@ -95,17 +97,17 @@ def login():
                 session['is_admin'] = False
                 print("sessin =>", session.get('is_admin'))
                 
-                return jsonify({'message': 'You are Only User'})
-            return jsonify({'error': 'Invalid Credential'})
+                return redirect(url_for('index'))
+            return render_template('login',mess="invalid credintials!")
     if request.method == 'GET':
-        return jsonify({'message': 'You are logged in'})
+        return render_template('login.html')
 
 
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
     # return redirect(url_for('login'))
-    return jsonify({'message': 'Logout Succesfully'})
+    return redirect(url_for('login'))
 
 
 @app.route('/register', methods=['POST'])
