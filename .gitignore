@@ -1,0 +1,36 @@
+# Byte-compiled / optimized files
+*.pyc
+__pycache__/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Local development server
+werkzeug/
+
+# Web server files
+*.pid
+*.pkl
+*.sqlite
+
+# User uploads
+uploads/
+
+# Dependency directories
+venv/
+env/
+
+# IDE files
+.vscode/
+.idea/
+
+# Compiled Python files
+*.pyo
+*.pyd
+
+# System files
+.DS_Store
+Thumbs.db
