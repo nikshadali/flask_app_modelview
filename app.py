@@ -63,8 +63,8 @@ class DataModeView(ModelView):
 
 
 admin.add_view(CompanyModelView(Company, db.session)) 
-admin.add_view(DataModeView(Data, db.session)) 
-admin.add_view(UserModelView(User,db.session))
+admin.add_view(DataModeView(Data, db.session,category='Team')) 
+admin.add_view(UserModelView(User,db.session, category='Team'))
     
 
 @app.route('/')
