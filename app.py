@@ -36,7 +36,7 @@ class Data(db.Model):
     mobile = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(100), nullable=False)
 
-admin = Admin(app, name="Dashboard") 
+admin = Admin(app, name="Dashboard", template_mode='bootstrap4') 
 my_admin = False
 # define model view for Compay
 class CompanyModelView(ModelView):
@@ -63,7 +63,7 @@ class DataModeView(ModelView):
         column_default_sort = ('first_name', False)
         column_sortable_list = ('first_name', 'last_name', 'mobile', 'email')
         column_labels ={'first_name': 'Username'}
-        column_filters = ('first_name', 'mobile')
+        column_filters = ('first_name', 'mobile', 'last_name', 'email')
 
 admin.add_view(CompanyModelView(Company, db.session)) 
 admin.add_view(DataModeView(Data, db.session,category='Team')) 
