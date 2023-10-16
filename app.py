@@ -59,6 +59,7 @@ class DataModeView(ModelView):
     if not my_admin:
         can_delete = False
         can_edit = False
+        column_searchable_list = ('first_name', 'mobile')
 
 
 
