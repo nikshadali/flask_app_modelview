@@ -60,8 +60,10 @@ class DataModeView(ModelView):
         can_delete = False
         can_edit = False
         column_searchable_list = ('first_name', 'mobile')
-
-
+        column_default_sort = ('first_name', False)
+        column_sortable_list = ('first_name', 'last_name', 'mobile', 'email')
+        column_labels ={'first_name': 'Username'}
+        column_filters = ('first_name', 'mobile')
 
 admin.add_view(CompanyModelView(Company, db.session)) 
 admin.add_view(DataModeView(Data, db.session,category='Team')) 
